@@ -1,6 +1,7 @@
 package entities;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,48 +26,65 @@ public class Order {
 		this.listOrderItem = listOrderItem;
 	}
 	
-
 	public Date getMoment() {
 		return moment;
 	}
 	
-
 	public void setMoment(Date moment) {
 		this.moment = moment;
 	}
 	
-
 	public OrderStatus getStatus() {
 		return status;
 	}
 	
-
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
 	
-
 	public Client getClient() {
 		return client;
 	}
 	
-
 	public void setClient(Client client) {
 		this.client = client;
 	}
 	
-
 	public List<OrderItem> getListOrderItem() {
 		return listOrderItem;
 	}
 
-
-	public void addListOrderItem(OrderItem orderItem) {
+	public void addItem(OrderItem orderItem) {
 		listOrderItem.add(orderItem);
 	}
 	
-	public void removeListOrderItem(OrderItem orderItem) {
+	public void removeItem(OrderItem orderItem) {
 		listOrderItem.remove(orderItem);
+	}
+
+	public Double total() {
+		
+		double sum = 0;
+		
+		for (OrderItem orderItem : listOrderItem) {
+			sum += orderItem.subTotal();
+		}
+		
+		return sum;
+	}
+	
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY hh:mm:ss");
+		StringBuilder sbr = new StringBuilder();
+		sbr.append("ORDER SUMMARY \n");
+		sbr.append("Order Moment: " + sdf.format(getMoment()) + "\n");
+		sbr.append("Order Status:" + getStatus() + "\n");
+		sbr.append("Client:" + getClient().getName() + " " + getClient().getBirthDate() + " - " + getClient().getEmail() + "\n");
+		sbr.append("Order Itens:");
+		for (OrderItem item : listOrderItem) {
+			sbr.append(item.getProduct() + ", " + String.format("%.2f", item.getPrice()) + "Quantity: " + item.getQuantity() + ", " + "Subtotal: " + item.subTotal());
+		}
+		return sbr.toString();
 	}
 	
 }
