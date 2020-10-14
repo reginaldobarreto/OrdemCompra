@@ -18,12 +18,11 @@ public class Order {
 		
 	}
 
-	public Order(Date moment, OrderStatus status, Client client, List<OrderItem> listOrderItem) {
+	public Order(Date moment, OrderStatus status, Client client) {
 		
 		this.moment = moment;
 		this.status = status;
 		this.client = client;
-		this.listOrderItem = listOrderItem;
 	}
 	
 	public Date getMoment() {
@@ -74,16 +73,20 @@ public class Order {
 	}
 	
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY hh:mm:ss");
+		double amount = 0;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		StringBuilder sbr = new StringBuilder();
 		sbr.append("ORDER SUMMARY \n");
 		sbr.append("Order Moment: " + sdf.format(getMoment()) + "\n");
 		sbr.append("Order Status:" + getStatus() + "\n");
-		sbr.append("Client:" + getClient().getName() + " " + getClient().getBirthDate() + " - " + getClient().getEmail() + "\n");
-		sbr.append("Order Itens:");
+		sbr.append("Client:" + getClient().getName() + " (" + sdf1.format(getClient().getBirthDate()) + ") - " + getClient().getEmail() + "\n");
+		sbr.append("Order Itens: \n");
 		for (OrderItem item : listOrderItem) {
-			sbr.append(item.getProduct() + ", " + String.format("%.2f", item.getPrice()) + "Quantity: " + item.getQuantity() + ", " + "Subtotal: " + item.subTotal());
+			sbr.append(item.getProduct().getName() + ", $" + String.format("%.2f", item.getPrice()) + " Quantity: " + item.getQuantity() + ", " + "Subtotal: $" + String.format("%.2f", item.subTotal()) + "\n");
+			amount += item.subTotal();
 		}
+		sbr.append("\nTotal price: $" + String.format("%.2f", amount));
 		return sbr.toString();
 	}
 	
