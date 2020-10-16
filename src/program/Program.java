@@ -42,7 +42,8 @@ public class Program {
 			
 			System.out.println("ENTER # " + (i+1) + " ITEM DATA");
 			System.out.print("Product name: ");
-			String prodName = sc.next();
+			sc.nextLine();
+			String prodName = sc.nextLine();
 			System.out.print("Product price: ");
 			Double prodPrice = sc.nextDouble();
 			System.out.print("Quantity : ");
@@ -57,7 +58,7 @@ public class Program {
 		
 		System.out.println();
 		System.out.println(order);
-		//System.out.println("Cliente: \nName: " + client.getName() + " E-mail: " + client.getEmail() + " Birth Date: " + sdf.format(client.getBirthDate()));
+		
 		
 	}
 
